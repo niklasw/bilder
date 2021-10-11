@@ -1,3 +1,6 @@
 Make a link to the root of the photo album file tree here and name it album.
 The configuration.json (photos.root) should then point to this link using a
 relative path.
+
+Create a folder named thumbs here. The default configuration will then generate
+the thumbs in this folder. Location can be changed in config.json
