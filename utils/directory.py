@@ -52,7 +52,8 @@ class directory:
     def get_thumb_path(self, path):
         return Path(self.conf.get.thumbs.root,self.get_relative_path(path))
 
-    def generate_thumbs(self, height=300, force=False):
+    def generate_thumbs(self, force=False):
+        height = self.conf.get.thumbs.size
         for img in self.images:
             thumb = self.get_thumb_path(img)
             if thumb.exists() and not force:
