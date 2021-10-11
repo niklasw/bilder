@@ -1,0 +1,23 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+  <a href="{{url_for('show_folder')}}?folder={{dir.path.parent}}">
+    <img class="leftnail" src="/static/images/up.png" alt="up.png">
+  </a>
+    {% for folder in dir.folders %}
+      <div class="fcontainer">
+        <a href="{{url_for('show_folder')}}?folder={{folder}}">
+          <img class="folder" src="{{folder_icon}}" alt="folder_icon"/></a>
+        <div class="centered">{{folder.name}}</div>
+      </div>
+    {% endfor %}
+
+  {% for image in dir.images %}
+    {% set thumb_ = dir.get_thumb_path(image) %}
+    <a href="{{url_for('show_photo')}}?photo={{image}}&next={{image}}&prev={{image}}">
+      <img class="thumbnail" src="{{thumb_}}" alt="{{thumb_}}"/>
+    </a>
+  {% endfor %}
+
+{% endblock %}

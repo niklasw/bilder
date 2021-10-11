@@ -1,0 +1,14 @@
+click==8.0.1
+dotted==0.1.8
+Flask==2.0.1
+Flask-Login==0.5.0
+Flask-WTF==0.15.1
+itsdangerous==2.0.1
+Jinja2==3.0.1
+json2==0.4.0
+MarkupSafe==2.0.1
+Pillow==8.3.2
+six==1.16.0
+Wand==0.6.7
+Werkzeug==2.0.1
+WTForms==2.3.3

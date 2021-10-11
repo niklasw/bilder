@@ -1,0 +1,35 @@
+{
+    "album":
+    {
+        "name":"My Album",
+        "owner":"Niklas",
+        "folder_icon": "static/images/folder.png"
+    },
+    "photos":
+    {
+        "root":"static/album",
+        "ignore":
+        [
+                "sub_",
+                "tmp",
+                "Thumbs",
+                "toweb",
+                "test",
+                "Videos",
+                "pyalbum.d",
+                ".comments"
+        ],
+        "extensions":["jpg","jpeg","png","gif"]
+    },
+    "thumbs":
+    {
+        "size":200,
+        "root":"static/thumbs"
+    },
+    "server":
+    {
+        "static_root":"/static",
+        "port":5500,
+        "ip":"127.0.0.1"
+    }
+}
