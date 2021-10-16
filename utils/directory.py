@@ -16,6 +16,23 @@ class Image_display_container(UserList):
 nxti = lambda n,i: 0 if i>n-2 else i+1
 prvi = lambda n,i: n if i<0 else i-1
 
+
+
+from functools import wraps
+import time
+
+def timeit(my_func):
+    @wraps(my_func)
+    def timed(*args, **kw):
+
+        tstart = time.time()
+        output = my_func(*args, **kw)
+        tend = time.time()
+        ms = 1000*(tend - tstart)
+        print(f'timeit "{my_func.__name__}" = {ms} ms\n')
+        return output
+    return timed
+
 class directory:
 
     def __init__(self, path, config):
@@ -24,11 +41,15 @@ class directory:
         self.conf = config
         self.cd(path)
 
+    @timeit
     def cd(self, path):
         self.path=Path(path)
         self.folders = sorted(self.get_folders())
         self.images = sorted(self.get_images())
+        self.n_images = len(self.images)
+        self.n_folders = len(self.folders)
 
+    @timeit
     def lcd(self, name):
         target = Path(self.path, name)
         if target.is_dir():
@@ -43,17 +64,25 @@ class directory:
     def get_images(self):
         file_iter = (f for f in self.path.iterdir() if f.is_file())
         for f in file_iter:
-            if imghdr.what(f) in self.extensions:
+            #if imghdr.what(f) in self.extensions:
+            if f.suffix.lower() in self.extensions:
                 yield f
 
     def get_relative_path(self, path):
         return Path(path).relative_to(self.conf.get.photos.root)
 
     def get_thumb_path(self, path):
-        return Path(self.conf.get.thumbs.root,self.get_relative_path(path))
+        thumbs_cfg = self.conf.get.thumbs
+        if 'server' in thumbs_cfg and 'server_root' in thumbs_cfg:
+            root = thumbs_cfg.server + thumbs_cfg.server_root
+            return f'{root}/{self.get_relative_path(path)}'
+        else:
+            root = thumbs_cfg.root
+            return Path(root,self.get_relative_path(path))
 
-    def generate_thumbs(self, force=False):
-        height = self.conf.get.thumbs.size
+    def generate_thumbs(self, height=300, force=False):
+        if 'server' in self.conf.get.thumbs:
+            return
         for img in self.images:
             thumb = self.get_thumb_path(img)
             if thumb.exists() and not force:
@@ -177,6 +206,12 @@ if __name__ == '__main__':
         elif sys.argv[1] == 'count':
             count_images()
     else:
-        test1()
+        from config import Config
+        cfg = Config('config.json')
+        thcfg = cfg.get.thumbs
+        if 'server' in thcfg:
+            print(thcfg.server_root)
+
+        #test1()
 
 

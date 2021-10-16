@@ -24,6 +24,8 @@
     "thumbs":
     {
         "size":200,
+	"server":"https://dock.hetsa.nu",
+	"server_root":"/thumbs",
         "root":"static/thumbs"
     },
     "server":

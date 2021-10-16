@@ -9,8 +9,14 @@ from utils.directory import directory as Dir
 from utils.config import Config
 from utils.auth import LoginForm
 
+from flask_htpasswd import HtPasswdAuth
+
 app = Flask(__name__, template_folder='templates')
 app.secret_key = os.urandom(24)
+
+app.config['FLASK_HTPASSWD_PATH'] = Path(Path.cwd(),'.htppp').as_posix()
+app.config['FLASK_AUTH_ALL']=True
+htpasswd = HtPasswdAuth(app)
 
 CFG = Config('config.json')
 
@@ -101,4 +107,5 @@ def show_photo():
 
 
 if __name__ == '__main__':
-    app.run(host=CFG.get.server.ip, port=CFG.get.server.port, debug=False)
+    print(f'PID: {os.getpid()}')
+    app.run(host=CFG.get.server.ip, port=CFG.get.server.port, debug=True)
