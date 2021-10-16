@@ -99,7 +99,7 @@ def show_photo():
         next_path =  Path('/static/images/not_found.jpg')
     print(directories_dict)
 
-    return render_template('show_photo.html',
+    return render_template('photo_view.html',
                             folder = current_folder.as_posix(),
                             image_path = photo_path.as_posix(),
                             prev_photo = prev_path.as_posix(),
@@ -108,4 +108,4 @@ def show_photo():
 
 if __name__ == '__main__':
     print(f'PID: {os.getpid()}')
-    app.run(host=CFG.get.server.ip, port=CFG.get.server.port, debug=True)
+    app.run(host=CFG.get.server.ip, port=CFG.get.server.port, debug=False)
