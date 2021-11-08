@@ -86,7 +86,8 @@ class directory:
         for img in self.images:
             thumb = self.get_thumb_path(img)
             if thumb.exists() and not force:
-                print(f'Already got thumb {thumb}')
+                pass
+                #print(f'Already got thumb {thumb}')
             else:
                 if not thumb.parent.exists():
                     thumb.parent.mkdir(parents=True, exist_ok=True)

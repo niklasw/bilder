@@ -130,3 +130,8 @@ dmypy.json
 
 # Auth
 .ht*
+
+config.json
+static/album
+static/thumbs
+log
