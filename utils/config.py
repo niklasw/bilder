@@ -4,9 +4,12 @@ from pathlib import Path
 class Config(dict):
 
     def __init__(self, config_file):
-        self.file_name = config_file
-        with open(config_file, 'r') as fp:
-            super().__init__(json2.load(fp))
+        self.file = Path(config_file)
+        if self.file.exists():
+            with self.file.open('r') as fp:
+                super().__init__(json2.load(fp))
+        else:
+            print('Missing config file', self.file)
 
     def path(self, path: str):
         path = path.strip('/')

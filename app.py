@@ -14,7 +14,7 @@ app.secret_key = os.urandom(24)
 #app.config['FLASK_AUTH_ALL']=True
 #htpasswd = HtPasswdAuth(app)
 
-CFG = Config('config.json')
+CFG = Config('static/config.json')
 
 directories_dict = {}
 
