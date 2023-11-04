@@ -28,10 +28,10 @@ def show_folder():
 
     if folder:
         root = Path(folder)
-        if not Path(CFG.get.photos.root) in root.parents:
-            root = Path(CFG.get.photos.root) 
+        if not Path(CFG.path('photos/root')) in root.parents:
+            root = Path(CFG.path('photos/root'))
     else:
-        root = Path(CFG.get.photos.root)
+        root = Path(CFG.path('photos/root'))
 
     curdir = Dir(root, CFG)
 
@@ -42,7 +42,7 @@ def show_folder():
     
     return render_template('directory_view.html',
                             dir = curdir,
-                            folder_icon = CFG.get.album.folder_icon)
+                            folder_icon = CFG.path('album/folder_icon'))
 
 @app.route('/show_photo', methods=['GET'])
 def show_photo():
@@ -70,4 +70,4 @@ def show_photo():
 
 if __name__ == '__main__':
     print(f'PID: {os.getpid()}')
-    app.run(host=CFG.get.server.ip, port=CFG.get.server.port, debug=False)
+    app.run(host=CFG.path('server/ip'), port=CFG.path('server/port'), debug=False)

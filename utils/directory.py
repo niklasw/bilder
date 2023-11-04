@@ -36,8 +36,8 @@ def timeit(my_func):
 class directory:
 
     def __init__(self, path, config):
-        self.ignored = config.get.photos.ignore
-        self.extensions = config.get.photos.extensions
+        self.ignored = config.path('photos/ignore')
+        self.extensions = config.path('photos/extensions')
         self.conf = config
         self.cd(path)
 
@@ -69,19 +69,19 @@ class directory:
                 yield f
 
     def get_relative_path(self, path):
-        return Path(path).relative_to(self.conf.get.photos.root)
+        return Path(path).relative_to(self.conf.path('photos/root'))
 
     def get_thumb_path(self, path):
-        thumbs_cfg = self.conf.get.thumbs
+        thumbs_cfg = self.conf.path('thumbs')
         if 'server' in thumbs_cfg and 'server_root' in thumbs_cfg:
             root = thumbs_cfg.server + thumbs_cfg.server_root
             return f'{root}/{self.get_relative_path(path)}'
         else:
-            root = thumbs_cfg.root
+            root = thumbs_cfg.get('root')
             return Path(root,self.get_relative_path(path))
 
     def generate_thumbs(self, height=300, force=False):
-        if 'server' in self.conf.get.thumbs:
+        if 'server' in self.conf.path('thumbs'):
             return
         for img in self.images:
             thumb = self.get_thumb_path(img)
@@ -140,7 +140,7 @@ def test1():
         print('No config.json found. Run this from correct dir')
     
     cfg = Config('config.json')
-    curdir = directory(cfg.get.photos.root, cfg)
+    curdir = directory(cfg.root(), cfg)
     print(curdir.path)
     curdir.lcd('piasFjallnas')
     print(curdir.path)
@@ -158,11 +158,11 @@ def make_thumbs():
         print('No config.json found. Run this from correct dir')
     
     cfg = Config('config.json')
-    curdir = directory(cfg.get.photos.root, cfg)
+    curdir = directory(cfg.root(), cfg)
     curdir.generate_thumbs(force=False)
 
-    for item in Path(cfg.get.photos.root).rglob('*'):
-        if item.is_dir() and item.name not in cfg.get.photos.ignore:
+    for item in Path(cfg.root()).rglob('*'):
+        if item.is_dir() and item.name not in cfg.path('photos/ignore'):
             curdir.cd(item)
             print('Entering folder', item)
             curdir.generate_thumbs(force=False)
@@ -174,7 +174,7 @@ def list_folders():
         print('No config.json found. Run this from correct dir')
     
     cfg = Config('config.json')
-    curdir = directory(cfg.get.photos.root, cfg)
+    curdir = directory(cfg.root(), cfg)
 
     for folder in curdir.folders:
         print(folder)
@@ -186,7 +186,7 @@ def count_images():
         print('No config.json found. Run this from correct dir')
     
     cfg = Config('config.json')
-    curdir = directory(cfg.get.photos.root, cfg)
+    curdir = directory(cfg.root(), cfg)
 
     nImages = 0
 
@@ -209,7 +209,7 @@ if __name__ == '__main__':
     else:
         from config import Config
         cfg = Config('config.json')
-        thcfg = cfg.get.thumbs
+        thcfg = cfg.path('thumbs')
         if 'server' in thcfg:
             print(thcfg.server_root)
 
