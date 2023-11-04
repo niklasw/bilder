@@ -1,6 +1,6 @@
 import json2
 from pathlib import Path
-from dotted.collection import DottedCollection, DottedDict, DottedList
+from dotted.collection import DottedCollection
 
 class Config:
 

@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template, session, redirect, request, Response
 import flask
-from flask_login import LoginManager, UserMixin
 import json2, os
-from dotted.collection import DottedCollection, DottedDict, DottedList
 from pathlib import Path
 from utils.directory import directory as Dir
 from utils.config import Config
-from utils.auth import LoginForm
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = os.urandom(24)
