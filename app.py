@@ -16,6 +16,9 @@ app.secret_key = os.urandom(24)
 
 CFG = Config('static/config.json')
 
+if not CFG:
+    print('Could not create config')
+
 directories_dict = {}
 
 @app.route('/test/<var>', methods=['GET','POST'])
