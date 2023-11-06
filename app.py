@@ -14,7 +14,7 @@ app.secret_key = os.urandom(24)
 #app.config['FLASK_AUTH_ALL']=True
 #htpasswd = HtPasswdAuth(app)
 
-CFG = Config('static/config.json')
+CFG = Config('config/config.json')
 
 if not CFG:
     print('Could not create config')
