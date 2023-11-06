@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+   fvtt:
+        container_name: bilder
+        image: niklas.wikstrom/bilder
+        volumes:
+# sudo mount-s3 --allow-other --read-only nikwik-photos /mnt/s3/nikwik-photos/
+          - ./templates:/app/templates:ro
+          - ./static/images:/app/static/images:ro
+          - ./static/thumbs:/app/static/thumbs:ro
+          - ./static/album.css:/app/static/album.css:ro
+          - ./config:/app/config:ro
+          - /mnt/s3/nikwik-photos/PhotoAlbum:/app/static/album:ro
+        ports:
+            - "5500:5500"
+        restart: unless-stopped
