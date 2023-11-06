@@ -1,0 +1,13 @@
+# Add mounting of s3 buckets as a service. Add this to /etc/systemd/system/mounts3.service
+# and run `systemctl daemon-reload` followed by `systemctl enable mounts3.service --now`
+[Unit]
+Description=Mount photo album from s3
+After=multi-user.target
+
+[Service]
+ExecStart=mount-s3 --allow-other --read-only nikwik-photos /mnt/s3/nikwik-photos/
+ExecStop=umount /mnt/s3/nikwik-photos
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
